@@ -18,5 +18,6 @@ interface request
 	public function getPassword():string;
 	public function getReferer():string;
 	public function getUserAgent():string;
+	public function getHeader(string $name):string;
 	public function __get(string $key):string;
 }

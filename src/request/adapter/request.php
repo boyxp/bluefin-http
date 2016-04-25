@@ -109,6 +109,10 @@ class request implements requestInterface
 		return $_SERVER['HTTP_USER_AGENT'];
 	}
 
+	public function getHeader(string $name):string
+	{
+	}
+
 	public function __get(string $key):string
 	{
 		$method = 'get'.$key;
