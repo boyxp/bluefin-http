@@ -46,6 +46,7 @@ class redis implements sessionInterface
 	{
 		if($session_data and $this->_cache!==$session_data) {
 			$this->_redis->set($this->_prefix.$session_id, $session_data);
+			$this->_redis->expire($this->_prefix.$session_id, $this->_life);
 			$this->_cache = $session_data;
 		}
 
