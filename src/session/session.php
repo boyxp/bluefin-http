@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace bluefin\http\session;
 interface session extends \SessionHandlerInterface
 {
