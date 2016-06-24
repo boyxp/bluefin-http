@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace bluefin\http\session\adapter;
-use bluefin\orm\connection\adapter\redis as connection;
 use bluefin\http\session\session as sessionInterface;
-class redis implements sessionInterface
+class redis extends \injector implements sessionInterface
 {
 	private $_life   = 1200;
 	private $_path   = '/';
@@ -14,9 +13,13 @@ class redis implements sessionInterface
 	private $_prefix = 'SESSION:';
 	private $_cache  = null;
 
-	public function __construct(connection $redis)
+	public function __construct(string $connection='connection_redis')
 	{
-		$this->_redis  = $redis;
+		if(static::$locator->has($connection)===false) {
+			throw new \InvalidArgumentException('error');
+		}
+
+		$this->_redis  = static::$locator->$connection;
 		$this->_secure = (isset($_SERVER['HTTPS']) and isset($_SERVER['HTTP_X_FORWARDED_PORT']) and $_SERVER['HTTP_X_FORWARDED_PORT']==='443');
 		$this->_domain = $_SERVER['SERVER_NAME'];
 		$this->_prefix = "SESSION:{$_SERVER['SERVER_NAME']}:";
